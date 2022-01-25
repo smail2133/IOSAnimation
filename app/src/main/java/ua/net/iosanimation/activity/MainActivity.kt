@@ -1,17 +1,12 @@
 package ua.net.iosanimation.activity
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
-import androidx.transition.TransitionManager
-import com.google.android.material.transition.MaterialArcMotion
-import com.google.android.material.transition.MaterialContainerTransform
 import ua.net.iosanimation.*
 import ua.net.iosanimation.databinding.ActivityMainBinding
 import ua.net.iosanimation.utils.*
@@ -109,26 +104,14 @@ class MainActivity : AppCompatActivity() {
         bnd.smallMenu.playHapticFeedback()
 
         bnd.smallMenu.iosPulse {
-            val transform = MaterialContainerTransform().apply {
-                startView = bnd.smallMenu
-                endView = bnd.extendedMenu
-                scrimColor = Color.TRANSPARENT
-                endElevation = 4.dp.toFloat()
-                startElevation = 0.dp.toFloat()
-                duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
-                interpolator = FastOutSlowInInterpolator()
-                setPathMotion(MaterialArcMotion())
-                fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-                isHoldAtEndEnabled = false
+            expandCollapseAnimation(
+                fromV = bnd.smallMenu,
+                toV = bnd.extendedMenu,
+                container = bnd.root,
+                isExpand = true
+            )
 
-                addTarget(bnd.extendedMenu)
-            }
-
-            bnd.smallMenu.visibility = View.INVISIBLE
-            bnd.extendedMenu.visibility = View.VISIBLE
-
-            TransitionManager.beginDelayedTransition(bnd.root, transform)
-
+            //change view scale to begin while it invisible.
             bnd.smallMenu.scaleX = 1f
             bnd.smallMenu.scaleY = 1f
         }
@@ -137,47 +120,21 @@ class MainActivity : AppCompatActivity() {
     private fun collapseMenu() {
         bnd.extendedMenu.playHapticFeedback()
 
-        val transform = MaterialContainerTransform().apply {
-            startView = bnd.extendedMenu
-            endView = bnd.smallMenu
-            scrimColor = Color.TRANSPARENT
-            startElevation = 4.dp.toFloat()
-            endElevation = 0.dp.toFloat()
-            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
-            interpolator = FastOutSlowInInterpolator()
-            setPathMotion(MaterialArcMotion())
-            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            isHoldAtEndEnabled = false
-
-            addTarget(bnd.smallMenu)
-        }
-
-        TransitionManager.beginDelayedTransition(bnd.root, transform)
-
-        bnd.extendedMenu.visibility = View.INVISIBLE
-        bnd.smallMenu.visibility = View.VISIBLE
+        expandCollapseAnimation(
+            fromV = bnd.smallMenu,
+            toV = bnd.extendedMenu,
+            container = bnd.root,
+            isExpand = false
+        )
     }
 
     private fun expandBluetoothMenu() {
-        val transform = MaterialContainerTransform().apply {
-            startView = bnd.extendedMenu
-            endView = bnd.bluetoothMenu
-            scrimColor = Color.TRANSPARENT
-            endElevation = 4.dp.toFloat()
-            startElevation = 0.dp.toFloat()
-            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
-            interpolator = FastOutSlowInInterpolator()
-            setPathMotion(MaterialArcMotion())
-            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            isHoldAtEndEnabled = false
-
-            addTarget(bnd.extendedMenu)
-        }
-
-        bnd.extendedMenu.visibility = View.INVISIBLE
-        bnd.bluetoothMenu.visibility = View.VISIBLE
-
-        TransitionManager.beginDelayedTransition(bnd.root, transform)
+        expandCollapseAnimation(
+            fromV = bnd.extendedMenu,
+            toV = bnd.bluetoothMenu,
+            container = bnd.root,
+            isExpand = true
+        )
 
         bnd.bluetoothMenu.iosPulse {
             bnd.bluetoothMenu.iosPulseBack { }
@@ -185,25 +142,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun collapseBluetoothMenu() {
-        val transform = MaterialContainerTransform().apply {
-            startView = bnd.bluetoothMenu
-            endView = bnd.extendedMenu
-            scrimColor = Color.TRANSPARENT
-            startElevation = 4.dp.toFloat()
-            endElevation = 0.dp.toFloat()
-            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
-            interpolator = FastOutSlowInInterpolator()
-            setPathMotion(MaterialArcMotion())
-            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            isHoldAtEndEnabled = false
-
-            addTarget(bnd.bluetoothMenu)
-        }
-
-        TransitionManager.beginDelayedTransition(bnd.root, transform)
-
-        bnd.bluetoothMenu.visibility = View.INVISIBLE
-        bnd.extendedMenu.visibility = View.VISIBLE
+        expandCollapseAnimation(
+            fromV = bnd.extendedMenu,
+            toV = bnd.bluetoothMenu,
+            container = bnd.root,
+            isExpand = false
+        )
 
         bnd.extendedMenu.iosPulse {
             bnd.extendedMenu.iosPulseBack { }
