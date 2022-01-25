@@ -1,4 +1,4 @@
-package ua.net.iosanimation
+package ua.net.iosanimation.utils
 
 import android.view.HapticFeedbackConstants
 import android.view.View

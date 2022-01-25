@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.net.iosanimation.BlurUtils
+import ua.net.iosanimation.utils.BlurUtils
 
 
 class MainActivityViewModel : ViewModel() {

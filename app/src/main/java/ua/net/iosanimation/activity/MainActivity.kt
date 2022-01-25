@@ -14,6 +14,8 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import ua.net.iosanimation.*
 import ua.net.iosanimation.databinding.ActivityMainBinding
+import ua.net.iosanimation.utils.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -89,25 +91,30 @@ class MainActivity : AppCompatActivity() {
     private fun expandMenu() {
         bnd.smallMenu.playHapticFeedback()
 
-        val transform = MaterialContainerTransform().apply {
-            startView = bnd.smallMenu
-            endView = bnd.extendedMenu
-            scrimColor = Color.TRANSPARENT
-            endElevation = 4.dp.toFloat()
-            startElevation = 0.dp.toFloat()
-            duration = resources.getInteger(R.integer.animation_duration).toLong()
-            interpolator = FastOutSlowInInterpolator()
-            setPathMotion(MaterialArcMotion())
-            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            isHoldAtEndEnabled = false
+        bnd.smallMenu.iosPulse {
+            val transform = MaterialContainerTransform().apply {
+                startView = bnd.smallMenu
+                endView = bnd.extendedMenu
+                scrimColor = Color.TRANSPARENT
+                endElevation = 4.dp.toFloat()
+                startElevation = 0.dp.toFloat()
+                duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
+                interpolator = FastOutSlowInInterpolator()
+                setPathMotion(MaterialArcMotion())
+                fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+                isHoldAtEndEnabled = false
 
-            addTarget(bnd.extendedMenu)
+                addTarget(bnd.extendedMenu)
+            }
+
+            bnd.smallMenu.visibility = View.INVISIBLE
+            bnd.extendedMenu.visibility = View.VISIBLE
+
+            TransitionManager.beginDelayedTransition(bnd.root, transform)
+
+            bnd.smallMenu.scaleX = 1f
+            bnd.smallMenu.scaleY = 1f
         }
-
-        bnd.smallMenu.visibility = View.INVISIBLE
-        bnd.extendedMenu.visibility = View.VISIBLE
-
-        TransitionManager.beginDelayedTransition(bnd.root, transform)
     }
 
     private fun collapseMenu() {
@@ -119,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             scrimColor = Color.TRANSPARENT
             startElevation = 4.dp.toFloat()
             endElevation = 0.dp.toFloat()
-            duration = resources.getInteger(R.integer.animation_duration).toLong()
+            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
             interpolator = FastOutSlowInInterpolator()
             setPathMotion(MaterialArcMotion())
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
