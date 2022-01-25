@@ -1,5 +1,6 @@
 package ua.net.iosanimation
 
+import android.view.HapticFeedbackConstants
 import android.view.View
 import kotlinx.coroutines.*
 
@@ -26,4 +27,11 @@ fun View.setDebounceListener(onClickListener: View.OnClickListener) {
             onClickListener.onClick(it)
         }
     this.setOnClickListener(clickWithDebounce)
+}
+
+fun View.playHapticFeedback() {
+    this.performHapticFeedback(
+        HapticFeedbackConstants.VIRTUAL_KEY,
+        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+    )
 }

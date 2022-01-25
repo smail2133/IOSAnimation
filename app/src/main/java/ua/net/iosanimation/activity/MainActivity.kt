@@ -12,11 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
-import ua.net.iosanimation.BlurUtils
-import ua.net.iosanimation.R
+import ua.net.iosanimation.*
 import ua.net.iosanimation.databinding.ActivityMainBinding
-import ua.net.iosanimation.dp
-import ua.net.iosanimation.setDebounceListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(bnd.root)
 
         bnd.smallMenu.setOnLongClickListener {
+            it.playHapticFeedback()
             expandMenu()
             true
         }
@@ -71,6 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val toastClick = View.OnClickListener { p0 ->
+        p0?.playHapticFeedback()
+
         Toast.makeText(
             this@MainActivity,
             p0?.tag.toString(),
@@ -87,6 +87,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun expandMenu() {
+        bnd.smallMenu.playHapticFeedback()
+
         val transform = MaterialContainerTransform().apply {
             startView = bnd.smallMenu
             endView = bnd.extendedMenu
@@ -109,6 +111,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun collapseMenu() {
+        bnd.extendedMenu.playHapticFeedback()
+
         val transform = MaterialContainerTransform().apply {
             startView = bnd.extendedMenu
             endView = bnd.smallMenu
