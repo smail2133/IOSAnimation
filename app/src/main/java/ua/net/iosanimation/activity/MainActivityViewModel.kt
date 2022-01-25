@@ -1,4 +1,4 @@
-package ua.net.iosanimation
+package ua.net.iosanimation.activity
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ua.net.iosanimation.BlurUtils
 
 
 class MainActivityViewModel : ViewModel() {
