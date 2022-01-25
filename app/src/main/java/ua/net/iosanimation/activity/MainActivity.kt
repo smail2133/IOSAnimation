@@ -68,6 +68,13 @@ class MainActivity : AppCompatActivity() {
         bnd.buttonExtended4.setOnClickListener(toastClick)
         bnd.buttonExtended5.setOnClickListener(toastClick)
         bnd.buttonExtended6.setOnClickListener(toastClick)
+
+        bnd.buttonExtended1.setOnLongClickListener(bluetoothLongClick)
+        bnd.buttonExtended2.setOnLongClickListener(bluetoothLongClick)
+        bnd.buttonExtended3.setOnLongClickListener(bluetoothLongClick)
+        bnd.buttonExtended4.setOnLongClickListener(bluetoothLongClick)
+        bnd.buttonExtended5.setOnLongClickListener(bluetoothLongClick)
+        bnd.buttonExtended6.setOnLongClickListener(bluetoothLongClick)
     }
 
     private val toastClick = View.OnClickListener { p0 ->
@@ -80,11 +87,21 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
+    private val bluetoothLongClick = View.OnLongClickListener {
+        it.iosPulse {
+            it.playHapticFeedback()
+            expandBluetoothMenu()
+        }
+        true
+    }
+
     override fun onBackPressed() {
-        when (bnd.extendedMenu.visibility) {
-            View.VISIBLE -> collapseMenu()
-            View.INVISIBLE -> super.onBackPressed()
-            else -> super.onBackPressed()
+        if (bnd.extendedMenu.visibility == View.VISIBLE) {
+            collapseMenu()
+        } else if (bnd.bluetoothMenu.visibility == View.VISIBLE) {
+            collapseBluetoothMenu()
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -139,5 +156,57 @@ class MainActivity : AppCompatActivity() {
 
         bnd.extendedMenu.visibility = View.INVISIBLE
         bnd.smallMenu.visibility = View.VISIBLE
+    }
+
+    private fun expandBluetoothMenu() {
+        val transform = MaterialContainerTransform().apply {
+            startView = bnd.extendedMenu
+            endView = bnd.bluetoothMenu
+            scrimColor = Color.TRANSPARENT
+            endElevation = 4.dp.toFloat()
+            startElevation = 0.dp.toFloat()
+            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
+            interpolator = FastOutSlowInInterpolator()
+            setPathMotion(MaterialArcMotion())
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+            isHoldAtEndEnabled = false
+
+            addTarget(bnd.extendedMenu)
+        }
+
+        bnd.extendedMenu.visibility = View.INVISIBLE
+        bnd.bluetoothMenu.visibility = View.VISIBLE
+
+        TransitionManager.beginDelayedTransition(bnd.root, transform)
+
+        bnd.bluetoothMenu.iosPulse {
+            bnd.bluetoothMenu.iosPulseBack { }
+        }
+    }
+
+    private fun collapseBluetoothMenu() {
+        val transform = MaterialContainerTransform().apply {
+            startView = bnd.bluetoothMenu
+            endView = bnd.extendedMenu
+            scrimColor = Color.TRANSPARENT
+            startElevation = 4.dp.toFloat()
+            endElevation = 0.dp.toFloat()
+            duration = resources.getInteger(R.integer.transform_animation_duration).toLong()
+            interpolator = FastOutSlowInInterpolator()
+            setPathMotion(MaterialArcMotion())
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+            isHoldAtEndEnabled = false
+
+            addTarget(bnd.bluetoothMenu)
+        }
+
+        TransitionManager.beginDelayedTransition(bnd.root, transform)
+
+        bnd.bluetoothMenu.visibility = View.INVISIBLE
+        bnd.extendedMenu.visibility = View.VISIBLE
+
+        bnd.extendedMenu.iosPulse {
+            bnd.extendedMenu.iosPulseBack { }
+        }
     }
 }
