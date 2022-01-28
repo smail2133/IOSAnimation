@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".activity.MainActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -16,15 +17,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/backgound_ios" />
+        tools:src="@drawable/background_ios" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/small_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="24dp"
         android:hapticFeedbackEnabled="true"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintWidth_percent="0.4"
         android:background="@drawable/fragment_background"
         app:layout_constraintBottom_toBottomOf="@+id/background_blur"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +38,8 @@
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:tag="1"
+            app:layout_constraintEnd_toStartOf="@id/button2"
             app:layout_constraintBottom_toTopOf="@+id/button3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,9 +49,6 @@
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:tag="2"
             app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,12 +60,10 @@
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:tag="3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button5"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button4"
             app:layout_constraintTop_toBottomOf="@+id/button1" />
 
         <com.google.android.material.button.MaterialButton
@@ -74,139 +71,34 @@
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:tag="4"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button3"
             app:layout_constraintTop_toBottomOf="@+id/button2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/extended_menu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/fragment_background"
-        android:visibility="invisible"
-        android:hapticFeedbackEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.7">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_1"
+            android:id="@+id/button5"
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:tag="1-1"
-            app:layout_constraintBottom_toTopOf="@+id/button_extended_3"
-            app:layout_constraintEnd_toStartOf="@id/button_extended_2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_2"
-            style="@style/MenuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:tag="2-2"
-            app:layout_constraintBottom_toTopOf="@+id/button_extended_4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_extended_1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_3"
-            style="@style/MenuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:tag="3-3"
-            app:layout_constraintEnd_toStartOf="@id/button_extended_4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_extended_1" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_4"
-            style="@style/MenuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:tag="4-4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_extended_3"
-            app:layout_constraintTop_toBottomOf="@+id/button_extended_2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_5"
-            style="@style/MenuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:tag="5-5"
+            android:tag="3"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_extended_6"
+            app:layout_constraintEnd_toStartOf="@id/button6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_extended_3" />
+            app:layout_constraintTop_toBottomOf="@+id/button3" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_extended_6"
+            android:id="@+id/button6"
             style="@style/MenuButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:tag="6-6"
+            android:tag="4"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_extended_5"
-            app:layout_constraintTop_toBottomOf="@+id/button_extended_4" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bluetooth_menu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/fragment_background"
-        android:hapticFeedbackEnabled="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.7">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bluetooth_button"
-            style="@style/MenuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:tag="1-1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/button5"
+            app:layout_constraintTop_toBottomOf="@+id/button4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
